@@ -1,0 +1,118 @@
+{
+  "name": "stjude_rnaseqv2",
+  "title": "RNA-Seq V2 pipeline",
+  "summary": "Alignment to hg38 with STAR",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "input_bam",
+      "label": "BAM to realign",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "strand",
+      "label": "empty, 'Stranded-Reverse', 'Stranded-Forward', or 'Unstranded'. If missing, will be inferred",
+      "class": "string",
+      "optional": true,
+      "help": "",
+      "choices": ["","Stranded-Forward", "Stranded-Reverse", "Unstranded"]
+    },
+    {
+      "name": "output_prefix",
+      "label": "Prefix to use for output files",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam",
+      "label": "Aligned BAM",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bam_index",
+      "label": "BAM index file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "star_log",
+      "label": "STAR alignment log file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gene_counts",
+      "label": "HTSeq count feature counts",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "inferred_strandedness",
+      "label": "Inferred strandedness information",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bigwig",
+      "label": "Bigwig format coverage information",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/stjude_rnaseqv2.sh",
+    "distribution": "Ubuntu",
+    "release": "16.04",
+    "version": "1"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
+  },
+  "regionalOptions": {
+    "azure:westus": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "azure:mem2_ssd1_x16"
+        }
+      }
+    }
+  }
+}
