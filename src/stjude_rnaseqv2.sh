@@ -73,16 +73,14 @@ main() {
     # will be AppInternalError with a generic error message.
 
 
-    #miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/master/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=star.tar.gz strand=$strand output_prefix=$output_prefix detect_nproc=true 
+    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/master/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz strand=$strand output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
 
-    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/expression_updates/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz strand=$strand output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
-
-    counts=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.gene_counts"]' | sed 's/"//g')
-    bam=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.bam"]' | sed 's/"//g')
-    index=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.bam_index"]' | sed 's/"//g')
-    log=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.star_log"]' | sed 's/"//g')
-    stranded=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.inferred_strandedness"]' | sed 's/"//g')
-    coverage=$(cat output.json |jq ".outputs" | jq '.["rnaseq_standard.bigwig"]' | sed 's/"//g')
+    counts=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.gene_counts"]')
+    bam=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.bam"]')
+    index=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.bam_index"]')
+    log=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.star_log"]')
+    stranded=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.inferred_strandedness"]')
+    coverage=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.bigwig"]')
 
 
     # The following line(s) use the dx command-line tool to upload your file
