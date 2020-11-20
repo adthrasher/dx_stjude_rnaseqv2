@@ -73,7 +73,7 @@ main() {
     # will be AppInternalError with a generic error message.
 
 
-    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/master/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz strand=$strand output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
+    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/master/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz strandedness=$strand output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
 
     counts=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.gene_counts"]')
     bam=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.bam"]')
