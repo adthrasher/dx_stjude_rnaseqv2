@@ -22,10 +22,7 @@ main() {
     echo "Value of output_prefix: '$output_prefix'"
 
     # Install conda
-    #pypath=$PYTHONPATH
-    #orig_path=$PATH
-    #export PYTHONPATH=
-    wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" -O miniconda.sh 
+    wget "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh" -O miniconda.sh
     chmod a+x miniconda.sh 
        ./miniconda.sh -b -p /opt/conda/ 
        rm miniconda.sh
