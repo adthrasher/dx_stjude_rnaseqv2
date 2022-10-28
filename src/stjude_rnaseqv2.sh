@@ -33,8 +33,8 @@ main() {
        conda install \
        -c conda-forge \
        -c bioconda \
-       miniwdl==0.7.5 \
-       docker-py==4.2.2 \
+       miniwdl==1.7.1 \
+       docker-py==6.0.0 \
        -y && \
        conda clean --all -y
  
