@@ -35,6 +35,7 @@ main() {
        -c bioconda \
        miniwdl==0.7.5 \
        docker-py==4.2.2 \
+       importlib_metadata~=4.0 \
        -y && \
        conda clean --all -y
  
