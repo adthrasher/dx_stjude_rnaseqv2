@@ -3,7 +3,7 @@
   "title": "St. Jude Cloud RNA-Seq V2 pipeline",
   "summary": "Align RNA-Seq to hg38",
   "dxapi": "1.0.0",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "developers": ["user-athrashe"],
   "authorizedUsers": [
       "user-appdpdnanexus_stjude.org",
@@ -24,11 +24,11 @@
     },
     {
       "name": "strand",
-      "label": "empty, 'Stranded-Reverse', 'Stranded-Forward', or 'Unstranded'. If missing, will be inferred",
+      "label": "'Stranded-Reverse', 'Stranded-Forward', or 'Unstranded'.",
       "class": "string",
-      "optional": true,
+      "optional": false,
       "help": "",
-      "choices": ["","Stranded-Forward", "Stranded-Reverse", "Unstranded"]
+      "choices": ["Stranded-Forward", "Stranded-Reverse", "Unstranded"]
     },
     {
       "name": "output_prefix",
