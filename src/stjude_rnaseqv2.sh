@@ -29,15 +29,16 @@ main() {
 
     PATH=/opt/conda/bin:$PATH
     conda init bash
-    conda update -n base -c defaults conda -y && \
-       conda install \
-       -c conda-forge \
-       -c bioconda \
-       miniwdl==0.7.5 \
-       docker-py==4.2.2 \
-       importlib_metadata~=4.0 \
-       -y && \
-       conda clean --all -y
+    #conda update -n base -c defaults conda -y && \
+    #   conda install \
+    #   -c conda-forge \
+    #   -c bioconda \
+    #   miniwdl \
+    #   docker-py \
+    #   -y && \
+    #   conda clean --all -y
+    #
+    conda env update --file env.yml
  
     if [ -z "$output_prefix" ]
     then 
@@ -55,23 +56,15 @@ main() {
     dx download project-F5444K89PZxXjBqVJ3Pp79B4:file-Fp2yqv89F80fgz96KBBfvK0V -o gencode.gtf.gz 
     dx download project-F5444K89PZxXjBqVJ3Pp79B4:file-Fjvvg9j9p5b17Y0p3gKYPPxY -o STARDB.tar.gz
 
-    
-    # Fill in your application code here.
-    #
-    # To report any recognized errors in the correct format in
-    # $HOME/job_error.json and exit this script, you can use the
-    # dx-jobutil-report-error utility as follows:
-    #
-    #   dx-jobutil-report-error "My error message"
-    #
-    # Note however that this entire bash script is executed with -e
-    # when running in the cloud, so any line which returns a nonzero
-    # exit code will prematurely exit the script; if no error was
-    # reported in the job_error.json file, then the failure reason
-    # will be AppInternalError with a generic error message.
+    strand_arg=''
+    if [ "$strand" != "" ]
+    then
+      echo "Setting strandedness=${strand}"
+      strand_arg="strandedness=${strand}"
+    fi
 
-
-    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/rnaseq-standard/v3.0.1/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz strandedness=$strand output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
+    echo "miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/rnaseq-standard/v3.0.1/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz $strand_arg output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json"
+    miniwdl run -d $HOME/output https://raw.githubusercontent.com/stjudecloud/workflows/rnaseq-standard/v3.0.1/workflows/rnaseq/rnaseq-standard.wdl gencode_gtf=gencode.gtf.gz input_bam=$input_bam_name stardb_tar_gz=STARDB.tar.gz $strand_arg output_prefix=$output_prefix detect_nproc=true validate_input=false bam_to_fastqs.split.reject_unaccounted=false > output.json
 
     counts=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.gene_counts"]')
     bam=$(cat output.json |jq ".outputs" | jq -r '.["rnaseq_standard.bam"]')
